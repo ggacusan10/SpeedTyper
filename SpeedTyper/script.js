@@ -12,6 +12,10 @@ var timerRunning = false;
 
 var errorCount = 0;
 
+// variables for WPM
+var textEnteredLength = 0;
+var timeTook = 0;
+
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
   if(time <= 9) {
@@ -29,6 +33,11 @@ function runTimer() {
   timer[0] = Math.floor((timer[3]/100)/60);
   timer[1] = Math.floor((timer[3]/100) - (timer[0] * 60));
   timer[2] = Math.floor(timer[3] - (timer[1] * 100) - (timer[0] * 6000));
+
+  // automatically stop the timer to 60 seconds
+  if(timer[0] == 1 && timer[1] == 0) {
+    clearInterval(interval)
+  }
 }
 
 // Match the text entered with the provided text on the page:
@@ -39,7 +48,8 @@ function spellCheck() {
   if(textEntered == originText) { // if everything is correct
     testWrapper.style.borderColor = "green";
     clearInterval(interval); // stop the clock
-    finished();
+    textEnteredLength = textEntered.length
+    showResults();
   } else {
     if(textEntered == originTextMatch) { // if partially correct
       testWrapper.style.borderColor = "blue";
@@ -51,8 +61,16 @@ function spellCheck() {
   }
 }
 
-function finished() {
-  results.innerHTML = "Error " + errorCount;
+function showResults() {
+  timeTook = (timer[0] * 60) + timer[1]
+
+  var wpm = (textEnteredLength) / 5;
+
+  wpm = (wpm * 60) / timeTook;
+
+  wpm = Number((wpm).toFixed(2))
+
+  results.innerHTML = "WPM: " + wpm;
   results.style.visibility = "visible";
 }
 
@@ -91,4 +109,10 @@ resetButton.addEventListener("click", reset, false);
    type until everything is typed
 3) Add error count
 4) Add high score
+*/
+
+/*
+Word Per Minute Calculation
+1) val = (# of characters typed) / 5
+2) (val * 60) / time it took
 */
