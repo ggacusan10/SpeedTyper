@@ -1,2 +1,2 @@
 # SpeedTyper
-Calculates word-per-minute!
+A word speed test! 
