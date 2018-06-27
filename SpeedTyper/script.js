@@ -37,6 +37,7 @@ function runTimer() {
   // automatically stop the timer to 60 seconds
   if(timer[0] == 1 && timer[1] == 0) {
     clearInterval(interval)
+    showResults()
   }
 }
 
@@ -58,13 +59,18 @@ function spellCheck() {
       errorCount++;
       console.log(errorCount)
     }
+    textEnteredLength = textEntered.length
   }
 }
 
 function showResults() {
   timeTook = (timer[0] * 60) + timer[1]
 
+  console.info("Time took: " + timeTook)
+
   var wpm = (textEnteredLength) / 5;
+
+  console.info("WPM: " + wpm)
 
   wpm = (wpm * 60) / timeTook;
 
