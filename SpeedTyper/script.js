@@ -76,7 +76,8 @@ function showResults() {
 
   wpm = Number((wpm).toFixed(2))
 
-  results.innerHTML = "WPM: " + wpm;
+  results.innerHTML = "WPM: " + wpm + "<br>" +
+                       "Error count: " + errorCount;
   results.style.visibility = "visible";
 }
 
